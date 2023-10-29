@@ -1,5 +1,5 @@
 ﻿initial:
-  image: 3.9.5-eclipse-temurin-17-alpine
+  image: maven:3.9.5-eclipse-temurin-17-alpine
   script:
     - mvn -version
     - java -version
