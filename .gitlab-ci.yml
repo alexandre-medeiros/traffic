@@ -1,6 +1,8 @@
 ﻿initial:
   image: maven:3.9.5-eclipse-temurin-17-alpine
   script:
-    - mvn clean install -Pdocker
-    - docker compose up 
-    
+    - mvn clean install
+    - docker build -t traffic-api --no-cache --build-arg JAR_FILE=api-0.0.1.jar .
+    - docker images
+    - docker compose up
+
