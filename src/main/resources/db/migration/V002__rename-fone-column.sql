@@ -1,0 +1,1 @@
+alter table owner rename column telephone to phone;

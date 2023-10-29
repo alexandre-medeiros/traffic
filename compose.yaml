@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  traffic-mysql:
+    image: mysql:8.0.34
+    container_name: traffic-mysql
+    environment:
+      MYSQL_DATABASE: traffic
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+    ports:
+      - "3306:3306"
+    networks:
+      - traffic-network
+
+  traffic-api:
+    image: traffic-api
+    command: ["/wait-for-it.sh", "traffic-mysql:3306", "-t", "15", "--", "java", "-jar", "/app/traffic-api.jar"]
+    container_name: traffic-api
+    ports:
+      - "8081:8080"
+    environment:
+      DB_HOST: traffic-mysql
+    networks:
+      - traffic-network
+    depends_on:
+      - traffic-mysql
+
+networks:
+  traffic-network:
+    driver: bridge

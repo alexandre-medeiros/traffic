@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+spring:
+  sql:
+    init:
+      mode: always
+
+  datasource:
+    url: jdbc:mysql://${DB_HOST}:3306/traffic?createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: administrator
+    password: administrator
+
+  jpa:
+    show-sql: true
