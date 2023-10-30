@@ -19,5 +19,5 @@ run-integration-tests:
   dependencies:
     - generate-jar
   script:
-    - docker build -t traffic-api --no-cache --build-arg JAR_FILE=api-0.0.1.jar .
+    - docker build -t traffic-api --build-arg JAR_FILE=api-0.0.1.jar .
     - docker compose up
