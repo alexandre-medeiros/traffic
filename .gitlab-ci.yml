@@ -3,24 +3,23 @@ stages:
   - build-api-docker-image
   - tests
 
-# generate-jar:
-#   stage: build-jar
-#   image: maven:3.9.5-eclipse-temurin-17-alpine
-#   script: 
-#     - mvn clean install
-#   artifacts:
-#     paths:
-#       - target/api-0.0.1.jar
+generate-jar:
+  stage: build-jar
+  image: maven:3.9.5-eclipse-temurin-17-alpine
+  script: 
+    - mvn clean install
+  artifacts:
+    paths:
+      - target/api-0.0.1.jar
       
 generate-api-docker-image:
   stage: build-api-docker-image
   image: docker:24.0.5
   services:
     - docker:24.0.5-dind
-  # dependencies:
-  #   - generate-jar    
+  dependencies:
+    - generate-jar    
   script:
-    # - docker build -t traffic-api --build-arg JAR_FILE=api-0.0.1.jar .
-    - ls -la
+    - docker build -t traffic-api --build-arg JAR_FILE=api-0.0.1.jar .
     - chmod +x wait-for-it.sh
-    # - docker compose up        
+    - docker compose up        
