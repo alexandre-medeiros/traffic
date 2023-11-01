@@ -13,6 +13,6 @@ module.exports = defineConfig({
   e2e: {
     setupNodeEvents,
     specPattern: "cypress/tests/**/*.feature",
-    baseUrl: "http://localhost:8081/",
+    baseUrl: `http://${process.env.HOST_API}:${process.env.HOST_PORT_API}/`,
     },
 });

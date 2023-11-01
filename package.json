@@ -11,7 +11,7 @@
   "devDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^18.0.4",
     "@cypress/browserify-preprocessor": "^3.0.2",
-    "cypress": "^13.3.2"
+    "cypress": "^13.4.0"
   },
   "cypress-cucumber-preprocessor": {
     "stepDefinitions": "cypress/tests/**/*.js",
@@ -19,6 +19,11 @@
     "omitFiltered": true
   },
   "dependencies": {
-    "dotenv": "^16.3.1"
+    "browser": "^0.2.6",
+    "chrome": "^0.1.0",
+    "dotenv": "^16.3.1",
+    "install": "^0.13.0",
+    "npx": "^10.2.2",
+    "run": "^1.4.0"
   }
 }
