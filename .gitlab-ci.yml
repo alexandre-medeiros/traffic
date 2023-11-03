@@ -1,7 +1,7 @@
 stages:
   - build-jar
-  - build-api-docker-image
-  - tests
+  - test-integration
+  - test-result
 
 generate-jar:
   stage: build-jar
@@ -12,8 +12,8 @@ generate-jar:
     paths:
       - target/api-0.0.1.jar
       
-generate-api-docker-image:
-  stage: build-api-docker-image
+test-integration:
+  stage: test-integration
   image: docker:24.0.5
   services:
     - docker:24.0.5-dind
@@ -23,3 +23,17 @@ generate-api-docker-image:
     - docker build -t traffic-api --build-arg JAR_FILE=api-0.0.1.jar .
     - chmod +x wait-for-it.sh
     - docker compose up -d      
+  artifacts:
+    paths:
+      - mochawesome-report/
+
+test-result:
+  stage: test-result
+  image: node:18.16.0
+  dependencies:
+    - test-integration  
+  script:
+    - ls -la mochawesome-report    
+  artifacts:
+    paths:
+      - mochawesome-report/
