@@ -5,9 +5,9 @@ Feature: Owner endpoint tests
     Then should return status code "200"
 
   Scenario: GET to /owners/{id} should return 200
-    Given I hit "GET" to endpoint "/owners/1"
+    Given I hit "GET" to endpoint "/owners/11"
     Then should return status code "200"
 
   Scenario: GET to /owners/{id} should return 200
-    Given I hit "GET" to endpoint "/owners/2"
+    Given I hit "GET" to endpoint "/owners/12"
     Then should return status code "200"
