@@ -22,10 +22,11 @@ test-integration:
   script:
     - docker build -t traffic-api --build-arg JAR_FILE=api-0.0.1.jar .
     - chmod +x wait-for-it.sh
-    - docker compose up -d      
+    - docker compose up -d   
+    - ls -la   
   artifacts:
     paths:
-      - mochawesome-report/
+      - mochawesome-report/*.*
 
 test-result:
   stage: test-result
