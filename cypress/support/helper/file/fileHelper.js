@@ -1,13 +1,12 @@
 const fs = require("fs");
+const { ERROR } = require("../consoleColor");
 
 function getFileIfExist(file) {
-  const buffer = fs.readFileSync(file);
-
-  if (!buffer) {
+  if (!fs.existsSync(file)) {
     ERROR("Não existe resultados de teste para serem processados");
   }
 
-  return buffer;
+  return fs.readFileSync(file);
 }
 
 module.exports = {

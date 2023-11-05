@@ -1,5 +1,5 @@
 const { getRootPath } = require("../file/pathConfigService");
-const { NOTICE, WARN } = require("../consoleColor");
+const { FAIL, NOTICE, WARN } = require("../consoleColor");
 const { getFileIfExist } = require("../file/fileHelper");
 
 var maxFileNameLength = 0;
@@ -45,7 +45,7 @@ function formatTime(milliseconds) {
 
 function setTestResults(data) {
   for (const result of data.results) {
-    const fileName = result.file;
+    const fileName = result.file.replace("cypress/tests/integration/", "");
     const testStats = result.suites[0].tests;
     const totalTime = testStats.reduce(
       (total, test) => total + (test.duration || 0),
@@ -91,18 +91,14 @@ async function main() {
   }
 
   WARN(footerL());
-  NOTICE(footer(data));
+
+  if (data.stats.passPercent === 100.0) {
+    NOTICE(footer(data));
+  } else {
+    FAIL(footer(data));
+  }
+
   console.log();
 }
 
 main();
-/*
-                    Spec                                              Tests  Passing  Failing  Pending  Skipped
-                    ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
-                    │ ✖  owner/features/owner.feature             574ms        3        1        2        -        - │
-                    ├────────────────────────────────────────────────────────────────────────────────────────────────┤
-                    │ ✖  vehicle/features/vehicle.feature         513ms        3        1        2        -        - │
-                    └────────────────────────────────────────────────────────────────────────────────────────────────┘
-                      ✖  2 of 2 failed (100%)                     00:01        6        2        4        -        -
-
-*/

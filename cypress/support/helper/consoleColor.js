@@ -6,16 +6,13 @@ const notice = clc.greenBright.italic;
 
 module.exports = {
   ERROR,
+  FAIL,
   WARN,
   NOTICE,
 };
 
-function ERROR2(msg, query) {
-  console.log();
-  console.log(error("ERROR - "), error(msg));
-  console.log(warn(query));
-  console.log();
-  process.exit(1);
+function FAIL(msg) {
+  console.log(error(msg));
 }
 
 function ERROR(msg, query, formatView) {
