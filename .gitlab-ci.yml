@@ -6,35 +6,35 @@ stages:
 generate-jar:
   stage: build-jar
   image: maven:3.9.5-eclipse-temurin-17-alpine
-  script: 
+  script:
     - mvn clean install
   artifacts:
     paths:
       - target/api-0.0.1.jar
-      
+
 test-integration:
   stage: test-integration
   image: docker:24.0.5
   services:
     - docker:24.0.5-dind
   dependencies:
-    - generate-jar    
+    - generate-jar
   script:
     - docker build -t traffic-api --build-arg JAR_FILE=api-0.0.1.jar .
     - chmod +x wait-for-it.sh
-    - docker compose up -d   
-    - ls -la   
+    - docker compose up -d
   artifacts:
     paths:
-      - mochawesome-report/*.*
+      - cypress/tests/results/
 
 test-result:
   stage: test-result
   image: node:18.16.0
   dependencies:
-    - test-integration  
+    - test-integration
   script:
-    - ls -la mochawesome-report    
+    - npm install && npm run result && npm install cli-color
+    - node cypress/support/helper/report/report_cmd-viwer.js
   artifacts:
     paths:
       - mochawesome-report/

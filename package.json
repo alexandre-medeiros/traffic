@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm run clean && npm run cypress && npm run merge && npm run marge",
+    "test": "npm run clean && npm run cypress && npm run result",
+    "result": "npm run merge && npm run marge",
     "clean": "npm run clean:merged && npm run clean:results && npm run clean:report",
     "clean:results": "rm -rf cypress/tests/results/* || true ",
     "clean:merged": "rm mochawesome.json || true ",
     "clean:report": "rm -rf mochawesome-report/* || true ",
-    "cypress": "npx cypress run --browser chrome",
+    "cypress": "npx cypress run",
     "merge": "npx mochawesome-merge cypress/tests/results/mocha*.json > mochawesome.json",
     "marge": "npx marge mochawesome.json"
   },
@@ -31,6 +32,7 @@
   "dependencies": {
     "browser": "^0.2.6",
     "chrome": "^0.1.0",
+    "cli-color": "^2.0.3",
     "dotenv": "^16.3.1",
     "install": "^0.13.0",
     "npx": "^10.2.2",
