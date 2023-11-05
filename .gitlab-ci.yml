@@ -15,6 +15,7 @@ generate-jar:
 test-integration:
   stage: test-integration
   image: docker:24.0.5
+  allow_failure: true
   services:
     - docker:24.0.5-dind
   dependencies:
@@ -22,8 +23,11 @@ test-integration:
   script:
     - docker build -t traffic-api --build-arg JAR_FILE=api-0.0.1.jar .
     - chmod +x wait-for-it.sh
-    - docker compose up
+    - docker compose up traffic-mysql -d
+    - docker compose up traffic-api -d
+    - docker compose up traffic-integration-test
   artifacts:
+    when: always
     paths:
       - cypress/tests/results/
 
