@@ -44,7 +44,7 @@ services:
       [
         "/bin/sh",
         "-c",
-        "./wait-for-it.sh traffic-api:8080 -t 60 && npm install && npx cypress install && npm test",
+        "./wait-for-it.sh traffic-api:8080 -t 180 && npm install && npx cypress install && npm test",
       ]
     environment:
       HOST_API: traffic-api
