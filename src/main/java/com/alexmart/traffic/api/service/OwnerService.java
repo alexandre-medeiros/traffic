@@ -28,7 +28,7 @@ public class OwnerService {
     }
 
     public Owner update(Owner owner) {
-        return save(owner);
+        return ownerRepository.save(owner);
     }
 
     public void delete(Long id) {
