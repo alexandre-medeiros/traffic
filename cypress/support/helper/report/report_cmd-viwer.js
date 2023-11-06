@@ -1,5 +1,5 @@
 const { getRootPath } = require("../file/pathConfigService");
-const { FAIL, NOTICE, WARN } = require("../consoleColor");
+const { ERROR, FAIL, NOTICE, WARN } = require("../consoleColor");
 const { getFileIfExist } = require("../file/fileHelper");
 
 var maxFileNameLength = 0;
@@ -27,14 +27,15 @@ const separator = () => {
 
 const footer = (data) => {
   const minus = "6     2      4      0      0".length;
-  const space = " ".repeat(maxFileNameLength - minus);
+  const quantitY = maxFileNameLength < minus ? 1 : maxFileNameLength - minus;
+  const space = " ".repeat(quantitY);
   return `  ✔  ${data.stats.passes} of ${
     data.stats.tests
-  } passed (${data.stats.passPercent.toFixed(2)}%) ${space}\t${formatTime(
-    data.stats.duration
-  )}\t${data.stats.testsRegistered}\t${data.stats.passes}\t${
-    data.stats.failures
-  }\t${data.stats.pending}\t${data.stats.skipped}`;
+  } passed ${space}\t${formatTime(data.stats.duration)}\t${
+    data.stats.testsRegistered
+  }\t${data.stats.passes}\t${data.stats.failures}\t${data.stats.pending}\t${
+    data.stats.skipped
+  }`;
 };
 
 function formatTime(milliseconds) {
@@ -45,7 +46,13 @@ function formatTime(milliseconds) {
 
 function setTestResults(data) {
   for (const result of data.results) {
-    const fileName = result.file.replace("cypress/tests/integration/", "");
+    const splitPath = result.file.split("/");
+
+    if (splitPath.length === 0) {
+      ERROR("Erro ao ler o arquivo mochawesome.json");
+    }
+
+    const fileName = splitPath[splitPath.length - 1];
     const testStats = result.suites[0].tests;
     const totalTime = testStats.reduce(
       (total, test) => total + (test.duration || 0),
