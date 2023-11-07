@@ -39,7 +39,7 @@ test-result:
     - test-integration
   script:
     - npm install && npm run result && npm install cli-color
-    - node cypress/support/helper/report/report_cmd-viwer.js
+    - node helper/report/report/report_cmd-viwer.js
   artifacts:
     paths:
       - mochawesome-report/

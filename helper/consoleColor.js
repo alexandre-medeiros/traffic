@@ -15,15 +15,10 @@ function FAIL(msg) {
   console.log(error(msg));
 }
 
-function ERROR(msg, query, formatView) {
-  if (formatView) {
-    console.log();
-    console.log(error("ERROR - "), error(msg));
-    console.log(warn(formatView(query)));
-    process.exit(1);
-  } else {
-    ERROR2(msg, query);
-  }
+function ERROR(msg) {
+  console.log();
+  console.log(error("ERROR - "), error(msg));
+  process.exit(1);
 }
 
 function WARN(msg) {

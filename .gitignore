@@ -19,6 +19,7 @@ package-lock.json
 
 ### Enviroment ###
 .env
+export.sh
 
 ### Tests ###
 mochawesome-report/

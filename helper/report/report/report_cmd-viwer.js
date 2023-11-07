@@ -1,5 +1,5 @@
 const { getRootPath } = require("../file/pathConfigService");
-const { ERROR, FAIL, NOTICE, WARN } = require("../consoleColor");
+const { ERROR, FAIL, NOTICE, WARN } = require("../../consoleColor");
 const { getFileIfExist } = require("../file/fileHelper");
 
 var maxFileNameLength = 0;

@@ -1,5 +1,5 @@
 ﻿const { join } = require("path");
-const root_path = join(__dirname, "../../../..");
+const root_path = join(__dirname, "../../../");
 const pathResults = `${root_path}/cypress/tests/results/`;
 
 function getResultPath() {

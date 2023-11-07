@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { ERROR } = require("../consoleColor");
+const { ERROR } = require("../../consoleColor");
 
 function getFileIfExist(file) {
   if (!fs.existsSync(file)) {
