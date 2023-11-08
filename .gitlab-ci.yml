@@ -39,11 +39,12 @@ test-result:
     - test-integration
   script:
     - |
-      if [ -d cypress/tests/result ]; then
+      if [ -d cypress/tests/results ]; then
         npm install && npm run result && npm install cli-color
         node helper/report/report/report_cmd-viwer.js
       else
-        echo "cypress/tests/result folder does not exist. Skipping the job."
+        echo "cypress/tests/results/ folder does not exist. Skipping the job."
+        exit 1
       fi
   artifacts:
     paths:
