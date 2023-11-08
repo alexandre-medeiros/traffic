@@ -13,6 +13,7 @@ module.exports = {
 
 function FAIL(msg) {
   console.log(error(msg));
+  process.exit(1);
 }
 
 function ERROR(msg) {

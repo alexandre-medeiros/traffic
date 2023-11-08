@@ -89,6 +89,7 @@ async function main() {
   setTestResults(data);
 
   console.log();
+  console.log();
   NOTICE(header());
   WARN(headerL());
 
@@ -105,6 +106,7 @@ async function main() {
     FAIL(footer(data));
   }
 
+  console.log();
   console.log();
 }
 

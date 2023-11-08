@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,5 +37,22 @@ public class OwnerController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(ownerService.save(owner));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Owner> updateOwner(@PathVariable Long id, @RequestBody Owner updatedOwner) {
+        Owner existingOwner = ownerService.findById(id);
+
+        if (existingOwner == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        existingOwner.setName(updatedOwner.getName());
+        existingOwner.setEmail(updatedOwner.getEmail());
+        existingOwner.setPhone(updatedOwner.getPhone());
+
+        Owner updated = ownerService.save(existingOwner);
+
+        return ResponseEntity.ok(updated);
     }
 }
