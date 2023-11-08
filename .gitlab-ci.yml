@@ -26,7 +26,6 @@ test-integration:
     - docker compose up traffic-mysql -d
     - docker compose up traffic-api -d
     - docker compose up traffic-integration-test
-    - docker logs traffic-api
   artifacts:
     when: always
     paths:

@@ -51,6 +51,10 @@ services:
     environment:
       HOST_API: traffic-api
       HOST_PORT_API: 8080
+      DB_HOST: traffic-mysql
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
+      MYSQL_DB: traffic
     volumes:
       - $PWD:$PWD
     working_dir: $PWD
