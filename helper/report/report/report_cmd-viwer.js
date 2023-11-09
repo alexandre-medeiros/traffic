@@ -29,13 +29,9 @@ const footer = (data) => {
   const minus = "6     2      4      0      0".length;
   const quantitY = maxFileNameLength < minus ? 1 : maxFileNameLength - minus;
   const space = " ".repeat(quantitY);
-  return `  ✔  ${data.stats.passes} of ${
-    data.stats.tests
-  } passed ${space}\t${formatTime(data.stats.duration)}\t${
+  return `  ✔  ${data.stats.passes} of ${data.stats.tests} passed ${space}\t${formatTime(data.stats.duration)}\t${
     data.stats.testsRegistered
-  }\t${data.stats.passes}\t${data.stats.failures}\t${data.stats.pending}\t${
-    data.stats.skipped
-  }`;
+  }\t${data.stats.passes}\t${data.stats.failures}\t${data.stats.pending}\t${data.stats.skipped}`;
 };
 
 function formatTime(milliseconds) {
@@ -54,31 +50,18 @@ function setTestResults(data) {
 
     const fileName = splitPath[splitPath.length - 1];
     const testStats = result.suites[0].tests;
-    const totalTime = testStats.reduce(
-      (total, test) => total + (test.duration || 0),
-      0
-    );
-    const passingTests = testStats.filter(
-      (test) => test.state === "passed"
-    ).length;
-    const failingTests = testStats.filter(
-      (test) => test.state === "failed"
-    ).length;
-    const pendingTests = testStats.filter(
-      (test) => test.state === "pending"
-    ).length;
-    const skippedTests = testStats.filter(
-      (test) => test.state === "skipped"
-    ).length;
+    const totalTime = testStats.reduce((total, test) => total + (test.duration || 0), 0);
+    const passingTests = testStats.filter((test) => test.state === "passed").length;
+    const failingTests = testStats.filter((test) => test.state === "failed").length;
+    const pendingTests = testStats.filter((test) => test.state === "pending").length;
+    const skippedTests = testStats.filter((test) => test.state === "skipped").length;
 
     if (fileName.length > maxFileNameLength) {
       maxFileNameLength = fileName.length;
     }
 
     results.push(
-      `│ ✖  ${fileName}\t${formatTime(totalTime)}\t${
-        testStats.length
-      }\t${passingTests}\t${failingTests}\t${pendingTests}\t${skippedTests}`
+      `│ ✖  ${fileName}\t    \t${testStats.length}\t${passingTests}\t${failingTests}\t${pendingTests}\t${skippedTests}`
     );
   }
 }

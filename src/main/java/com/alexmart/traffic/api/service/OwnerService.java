@@ -14,7 +14,6 @@ public class OwnerService {
     private final OwnerRepository ownerRepository;
 
     public List<Owner> findAll() {
-
         return ownerRepository.findAll();
     }
 
@@ -31,6 +30,7 @@ public class OwnerService {
         return ownerRepository.save(owner);
     }
 
+    @Transactional
     public void delete(Long id) {
         Owner owner = findById(id);
         ownerRepository.delete(owner);

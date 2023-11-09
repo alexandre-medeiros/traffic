@@ -26,6 +26,18 @@ Then("should return the {string} existent in database with same id {string}", (t
   compareResponseWithDatabaseRegistry(response.body, tableName, id);
 });
 
+Then("should remove the {string} existent in database with same id {string}", (tableName, id) => {
+  const query = `SELECT * FROM ${tableName} WHERE id = ?`;
+  const params = [id];
+  cy.task("select", { query, params }).then((result) => {
+    if (result.length == 0) {
+      expect(result.length).to.equal(0);
+    } else {
+      throw new Error(`Data found in the database for ID: ${id}`);
+    }
+  });
+});
+
 Given("I hit {string} to {string} with data:", function (method, url, data) {
   jsonData = JSON.parse(data);
   cy.request(method, url, jsonData).then((result) => {

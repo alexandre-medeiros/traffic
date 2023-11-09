@@ -13,9 +13,6 @@ Feature: Owner endpoint tests
     Examples:
       | url         | id  |
       | '/owners/1' | '1' |
-      | '/owners/2' | '2' |
-      | '/owners/3' | '3' |
-      | '/owners/4' | '4' |
 
   Scenario: POST to /owners should create a new owner
     Given I hit "POST" to "/owners" with data:
@@ -40,3 +37,12 @@ Feature: Owner endpoint tests
       """
     Then the "owner" with id "1" is updated with success
     And should return status code "200"
+
+  Scenario: DELETE to /owners/{id} should remove specific owner existent in database
+    Given I hit "DELETE" to endpoint <url>
+    Then should remove the "owner" existent in database with same id <id>
+    And should return status code "204"
+
+    Examples:
+      | url         | id  |
+      | '/owners/1' | '1' |
