@@ -1,17 +1,17 @@
-package com.alexmart.traffic.api.domain.model;
+package com.alexmart.traffic.domain.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class Owner {
@@ -23,4 +23,16 @@ public class Owner {
     private String name;
     private String email;
     private String phone;
+    @OneToMany(mappedBy = "owner")
+    private List<Vehicle> vehicles;
+    @OneToMany(mappedBy = "owner")
+    private List<Citation> citations;
+
+    public Owner(Long id, String name, String email, String phone) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+    }
+
 }

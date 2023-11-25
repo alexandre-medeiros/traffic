@@ -1,7 +1,11 @@
 package com.alexmart.traffic.api.controller;
 
-import com.alexmart.traffic.api.domain.model.Owner;
-import com.alexmart.traffic.api.service.OwnerService;
+import com.alexmart.traffic.api.converter.OwnerConverter;
+import com.alexmart.traffic.api.dto.owner.OwnerInputDto;
+import com.alexmart.traffic.api.dto.owner.OwnerOutputDto;
+import com.alexmart.traffic.domain.model.Owner;
+import com.alexmart.traffic.domain.services.OwnerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,33 +26,33 @@ public class OwnerController {
     @Autowired
     private OwnerService ownerService;
 
+    @Autowired
+    private OwnerConverter ownerConverter;
+
     @GetMapping
-    public List<Owner> getAllOwner() {
-        return ownerService.findAll();
+    @ResponseStatus(HttpStatus.OK)
+    public List<OwnerOutputDto> getAllOwner() {
+        return ownerConverter.ownerListToOwnerDtoList(ownerService.findAll());
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Owner getOwner(@PathVariable Long id) {
-        return ownerService.findById(id);
+    public OwnerOutputDto getOwner(@PathVariable Long id) {
+        return ownerConverter.ownerToOwnerDto(ownerService.findById(id));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Owner createOwner(@RequestBody Owner owner) {
-        return ownerService.save(owner);
+    public OwnerOutputDto createOwner(@RequestBody @Valid OwnerInputDto ownerDto) {
+        Owner owner = ownerConverter.ownerDtoToOwner(ownerDto);
+        return ownerConverter.ownerToOwnerDto(ownerService.save(owner));
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Owner updateOwner(@PathVariable Long id, @RequestBody Owner updatedOwner) {
-        Owner existingOwner = ownerService.findById(id);
-
-        existingOwner.setName(updatedOwner.getName());
-        existingOwner.setEmail(updatedOwner.getEmail());
-        existingOwner.setPhone(updatedOwner.getPhone());
-
-        return ownerService.save(existingOwner);
+    public OwnerOutputDto updateOwner(@PathVariable Long id, @RequestBody @Valid OwnerInputDto ownerDto) {
+        Owner owner = ownerConverter.ownerDtoToOwner(ownerDto);
+        return ownerConverter.ownerToOwnerDto(ownerService.update(id, owner));
     }
 
     @DeleteMapping("/{id}")
@@ -56,4 +60,5 @@ public class OwnerController {
     public void deleteOwner(@PathVariable Long id) {
         ownerService.delete(id);
     }
+
 }

@@ -5,13 +5,21 @@ let response = null;
 let jsonData = null;
 
 Given("I hit {string} to endpoint {string}", (method, url) => {
-  cy.request(method, url).then((result) => {
+  cy.request({ method, url, failOnStatusCode: false }).then((result) => {
     response = result;
   });
 });
 
 Then("should return status code {string}", (code) => {
   expect(response.status).to.eq(+code);
+});
+
+Then("should return error message {string}", (msg) => {
+  expect(response.body.title).to.eq(msg);
+});
+
+Then("should return error instance {string}", (instance) => {
+  expect(response.body.instance).to.eq(instance);
 });
 
 Then("should return all {string}", (tableName) => {
@@ -27,20 +35,17 @@ Then("should return the {string} existent in database with same id {string}", (t
 });
 
 Then("should remove the {string} existent in database with same id {string}", (tableName, id) => {
-  const query = `SELECT * FROM ${tableName} WHERE id = ?`;
-  const params = [id];
-  cy.task("select", { query, params }).then((result) => {
-    if (result.length == 0) {
-      expect(result.length).to.equal(0);
-    } else {
-      throw new Error(`Data found in the database for ID: ${id}`);
-    }
-  });
+  thereIsNoRegistryInDatabase(tableName, id);
+});
+
+Then("there is no {string} in database with same id {string}", (tableName, id) => {
+  thereIsNoRegistryInDatabase(tableName, id);
 });
 
 Given("I hit {string} to {string} with data:", function (method, url, data) {
   jsonData = JSON.parse(data);
-  cy.request(method, url, jsonData).then((result) => {
+  const body = jsonData;
+  cy.request({ method, url, body, failOnStatusCode: false }).then((result) => {
     response = result;
   });
 });
@@ -51,9 +56,20 @@ Then("the {string} is registred with success", function (tableName) {
 
 Then("the {string} with id {string} is updated with success", function (tableName, id) {
   const body = { id: Number(id), ...jsonData };
-  cy.log(JSON.stringify(body));
   compareResponseWithDatabaseRegistry(body, tableName, id);
 });
+
+function thereIsNoRegistryInDatabase(tableName, id) {
+  const query = `SELECT * FROM ${tableName} WHERE id = ?`;
+  const params = [id];
+  cy.task("select", { query, params }).then((result) => {
+    if (result.length == 0) {
+      expect(result.length).to.equal(0);
+    } else {
+      throw new Error(`Data found in the database for ID: ${id}`);
+    }
+  });
+}
 
 function compareResponseWithDatabaseRegistry(response, tableName, id) {
   const query = `SELECT * FROM ${tableName} WHERE id = ?`;
