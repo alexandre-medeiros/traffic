@@ -14,6 +14,9 @@ public interface OwnerConverter {
 
     OwnerOutputDto ownerToOwnerDto(Owner owner);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "vehicles", ignore = true)
+    @Mapping(target = "citations", ignore = true)
     Owner ownerDtoToOwner(OwnerInputDto ownerDto);
 
     List<OwnerOutputDto> ownerListToOwnerDtoList(List<Owner> ownerList);

@@ -39,6 +39,7 @@ public class HandlerRegistry implements ApplicationListener<ContextRefreshedEven
      * @return The AbstractHandler instance associated with the given handler name, or null if not found.
      */
     public AbstractHandler getHandler(String handlerName) {
+
         return handlerMap.get(handlerName);
     }
 

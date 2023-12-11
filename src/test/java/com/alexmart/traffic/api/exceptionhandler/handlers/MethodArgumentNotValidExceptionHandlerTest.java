@@ -57,13 +57,14 @@ class MethodArgumentNotValidExceptionHandlerTest {
 
     @Test
     void testHandlerWithNoFieldErrors() {
+        // arrange
         when(exception.getBindingResult()).thenReturn(bindingResult);
         when(bindingResult.getFieldErrors()).thenReturn(Collections.emptyList());
 
-        // Test
+        // act
         ProblemDetail problemDetail = exceptionHandler.handler(exception, request, HTTPS_DOMAIN_RESOURCE_ERROR);
 
-        // Assert
+        // assert
         assertEquals(HttpStatus.BAD_REQUEST.value(), problemDetail.getStatus());
         assertEquals(INVALID_PARAMS, problemDetail.getTitle());
         assertEquals(URI.create(HTTPS_DOMAIN_RESOURCE_ERROR), problemDetail.getType());
@@ -79,7 +80,7 @@ class MethodArgumentNotValidExceptionHandlerTest {
 
     @Test
     void testHandler() {
-        // Mocks
+        // Arrange
         String url = HTTPS_DOMAIN_RESOURCE_ERROR;
         FieldError fieldError = new FieldError(OBJECT_NAME, FIELD_NAME, "default error message");
 
@@ -87,7 +88,7 @@ class MethodArgumentNotValidExceptionHandlerTest {
         when(bindingResult.getFieldErrors()).thenReturn(Collections.singletonList(fieldError));
         when(messageSource.getMessage(eq(fieldError), any(Locale.class))).thenReturn(CUSTOMIZED_ERROR_MESSAGE);
 
-        // Test
+        // Act
         ProblemDetail problemDetail = exceptionHandler.handler(exception, request, url);
 
         // Assert
@@ -115,7 +116,7 @@ class MethodArgumentNotValidExceptionHandlerTest {
 
     @Test
     void testHandlerWithMultipleFieldErrors() {
-        // Mocks
+        // Arrange
         String url = HTTPS_DOMAIN_RESOURCE_ERROR;
         FieldError fieldError1 = new FieldError(OBJECT_NAME, FIELD_NAME, "error message 1");
         FieldError fieldError2 = new FieldError(OBJECT_NAME, "anotherField", "error message 2");
@@ -125,7 +126,7 @@ class MethodArgumentNotValidExceptionHandlerTest {
         when(messageSource.getMessage(eq(fieldError1), any(Locale.class))).thenReturn("customized error message 1");
         when(messageSource.getMessage(eq(fieldError2), any(Locale.class))).thenReturn("customized error message 2");
 
-        // Test
+        // Act
         ProblemDetail problemDetail = exceptionHandler.handler(exception, request, url);
 
         // Assert

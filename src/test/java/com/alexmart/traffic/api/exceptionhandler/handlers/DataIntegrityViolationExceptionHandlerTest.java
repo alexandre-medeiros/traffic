@@ -14,20 +14,21 @@ class DataIntegrityViolationExceptionHandlerTest {
 
     @Test
     void testHandler() {
+        // Arrange
         DataIntegrityViolationExceptionHandler handler = new DataIntegrityViolationExceptionHandler();
         WebRequest request = mock(WebRequest.class);
         String url = "/example";
         String errorMessage = "Data integrity violation error message";
-
         DataIntegrityViolationException exception = new DataIntegrityViolationException(errorMessage);
 
+        // Act
         ProblemDetail problemDetail = handler.handler(exception, request, url);
 
+        // Assert
         assertEquals(HttpStatus.CONFLICT.value(), problemDetail.getStatus());
         assertEquals("Resource in use", problemDetail.getTitle());
         assertEquals(URI.create(url), problemDetail.getType());
         assertEquals(errorMessage, problemDetail.getDetail());
-        // Add more assertions if needed
     }
 
     @Test

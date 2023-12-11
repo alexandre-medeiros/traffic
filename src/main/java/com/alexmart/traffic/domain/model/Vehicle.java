@@ -1,6 +1,5 @@
 package com.alexmart.traffic.domain.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -10,9 +9,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import java.time.OffsetDateTime;
 
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class Vehicle {
@@ -28,8 +30,21 @@ public class Vehicle {
     private String plate;
     @Enumerated(EnumType.STRING)
     private StatusVehicle status;
-    @Column(name = "created_date")
+    @CreationTimestamp
     private OffsetDateTime createdDate;
-    @Column(name = "arrested_date")
     private OffsetDateTime arrestedDate;
+
+    public Vehicle(Owner owner, String make, String model, String plate, StatusVehicle status, OffsetDateTime createdDate, OffsetDateTime arrestedDate) {
+        this.owner = owner;
+        this.make = make;
+        this.model = model;
+        this.plate = plate;
+        this.status = status;
+        this.createdDate = createdDate;
+        this.arrestedDate = arrestedDate;
+    }
+
+    public Long getOwnerId() {
+        return owner.getId();
+    }
 }

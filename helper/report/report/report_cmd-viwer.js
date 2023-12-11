@@ -7,31 +7,29 @@ var results = [];
 
 const header = () => {
   const spaces = " ".repeat(maxFileNameLength);
-  return `     Spec ${spaces}   Tests  Passing  Failing  Pending  Skipped`;
+  return `     Spec ${spaces}Tests  Passing  Failing  Pending  Skipped`;
 };
 
 const headerL = () => {
   const spaces = "─".repeat(maxFileNameLength);
-  return `┌─────${spaces}────────────────────────────────────────────────┐`;
+  return `┌─────${spaces}───────────────────────────────────────────┐`;
 };
 
 const footerL = () => {
   const spaces = "─".repeat(maxFileNameLength);
-  return `└─────${spaces}────────────────────────────────────────────────┘`;
+  return `└─────${spaces}───────────────────────────────────────────┘`;
 };
 
 const separator = () => {
   const spaces = "─".repeat(maxFileNameLength);
-  return `├─────${spaces}────────────────────────────────────────────────┤`;
+  return `├─────${spaces}───────────────────────────────────────────┤`;
 };
 
 const footer = (data) => {
-  const minus = "6     2      4      0      0".length;
+  const minus = "6   2    4    0    0".length;
   const quantitY = maxFileNameLength < minus ? 1 : maxFileNameLength - minus;
   const space = " ".repeat(quantitY);
-  return `  ✔  ${data.stats.passes} of ${data.stats.tests} passed ${space}\t${formatTime(data.stats.duration)}\t${
-    data.stats.testsRegistered
-  }\t${data.stats.passes}\t${data.stats.failures}\t${data.stats.pending}\t${data.stats.skipped}`;
+  return `  ✔  ${data.stats.passes} of ${data.stats.tests} passed    ${space}\t ${data.stats.testsRegistered}\t ${data.stats.passes}\t ${data.stats.failures}\t ${data.stats.pending}\t ${data.stats.skipped}`;
 };
 
 function formatTime(milliseconds) {
@@ -61,7 +59,7 @@ function setTestResults(data) {
     }
 
     results.push(
-      `│ ✖  ${fileName}\t    \t${testStats.length}\t${passingTests}\t${failingTests}\t${pendingTests}\t${skippedTests}`
+      `│ ✖  ${fileName}\t ${testStats.length}\t ${passingTests}\t ${failingTests}\t ${pendingTests}\t ${skippedTests}`
     );
   }
 }

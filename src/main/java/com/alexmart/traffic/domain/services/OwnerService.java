@@ -1,6 +1,5 @@
 package com.alexmart.traffic.domain.services;
 
-import com.alexmart.traffic.api.converter.OwnerConverter;
 import com.alexmart.traffic.domain.exception.BusinessException;
 import com.alexmart.traffic.domain.model.Owner;
 import com.alexmart.traffic.domain.repository.OwnerRepository;
@@ -14,7 +13,6 @@ import java.util.List;
 public class OwnerService {
 
     private final OwnerRepository ownerRepository;
-    private final OwnerConverter ownerConverter;
 
     public List<Owner> findAll() {
         return ownerRepository.findAll();
@@ -39,10 +37,8 @@ public class OwnerService {
     }
 
     @Transactional
-    public Owner update(Long id, Owner owner) {
-        Owner existingOwner = findById(id);
-        Owner updated = ownerConverter.updateOwner(owner, existingOwner);
-        return ownerRepository.save(updated);
+    public Owner update(Owner owner) {
+        return save(owner);
     }
 
     @Transactional

@@ -17,7 +17,6 @@ public class CustomJpaRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> i
 
     @Override
     public T findByIdOrFail(ID id) {
-//        T entity = findById(id).orElse(null);
         T entity = manager.find(getDomainClass(), id);
 
         if (entity == null) {
