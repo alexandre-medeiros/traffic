@@ -23,11 +23,13 @@ public class Citation {
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne
+    private Vehicle vehicle;
     private String description;
     private BigDecimal amount;
     private OffsetDateTime dateViolation;
-    @ManyToOne
-    private Owner owner;
-    @ManyToOne
-    private Vehicle vehicle;
+
+    public Owner getOwner() {
+        return vehicle.getOwner();
+    }
 }

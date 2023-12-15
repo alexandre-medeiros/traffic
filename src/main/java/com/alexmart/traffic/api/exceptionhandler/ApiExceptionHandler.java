@@ -5,6 +5,7 @@ import com.alexmart.traffic.api.exceptionhandler.handlers.HandlerRegistry;
 import com.alexmart.traffic.domain.exception.BusinessException;
 import com.alexmart.traffic.domain.exception.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +25,7 @@ import java.net.URI;
  *
  * @see <a href="https://www.rfc-editor.org/info/rfc9457">RFC 9457</a>
  */
+@AllArgsConstructor
 @RestControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 

@@ -9,7 +9,7 @@ create table vehicle(
     arrested_date datetime,
 
     primary key (id)
-);
+) AUTO_INCREMENT = 1;
 
 alter table vehicle add constraint fk_vehicle_owner_id
 foreign key (owner_id) references owner (id);

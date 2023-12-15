@@ -18,6 +18,7 @@ public interface VehicleConverter {
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "arrestedDate", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
+    @Mapping(target = "citations", ignore = true)
     Vehicle vehicleDtoToVehicle(VehicleInputDto vehicleDto);
 
     List<VehicleOutputDto> vehicleListToVehicleDtoList(List<Vehicle> vehicleList);

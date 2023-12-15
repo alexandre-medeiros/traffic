@@ -1,6 +1,8 @@
 package com.alexmart.traffic.domain.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,10 +25,8 @@ public class Owner {
     private String name;
     private String email;
     private String phone;
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Vehicle> vehicles;
-    @OneToMany(mappedBy = "owner")
-    private List<Citation> citations;
 
     public Owner(Long id, String name, String email, String phone) {
         this.id = id;

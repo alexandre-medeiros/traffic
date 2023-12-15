@@ -16,14 +16,12 @@ public interface OwnerConverter {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "vehicles", ignore = true)
-    @Mapping(target = "citations", ignore = true)
     Owner ownerDtoToOwner(OwnerInputDto ownerDto);
 
     List<OwnerOutputDto> ownerListToOwnerDtoList(List<Owner> ownerList);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "vehicles", ignore = true)
-    @Mapping(target = "citations", ignore = true)
     Owner updateOwner(Owner owner, @MappingTarget Owner existingOwner);
 }
 
